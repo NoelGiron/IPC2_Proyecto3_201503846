@@ -4,3 +4,12 @@ class configuracion:
         self.nombre = nombre
         self.descripcion = descripcion
         self.lista_recursos = []
+
+    def to_dict(self):
+
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'descripcion': self.descripcion,
+            'recursos': self.lista_recursos
+        }

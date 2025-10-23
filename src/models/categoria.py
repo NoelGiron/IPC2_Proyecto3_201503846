@@ -5,3 +5,13 @@ class categoria:
         self.descripcion = descripcion
         self.carga = carga
         self.configuraciones = []
+
+    def to_dict(self):
+
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'descripcion': self.descripcion,
+            'carga': self.carga,
+            'configuracion': self.configuraciones
+        }

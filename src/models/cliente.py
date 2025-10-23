@@ -7,3 +7,15 @@ class cliente:
         self.direccion = direccion 
         self.correo = correo
         self.lista_instancias = []
+
+    def to_dict(self):
+
+        return {
+            'nit': self.nit,
+            'nombre': self.nombre,
+            'usuario': self.usuario,
+            'clave': self.clave,
+            'direccion': self.direccion,
+            'correo': self.correo,
+            'instancias': self.lista_instancias            
+        }

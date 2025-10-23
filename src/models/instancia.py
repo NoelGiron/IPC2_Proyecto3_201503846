@@ -6,3 +6,14 @@ class instancia:
         self.fecha_inicio = fecha_inicio
         self.estado = estado
         self.fecha_fin = fecha_fin
+
+    def to_dict(self):
+
+        return {
+            'id': self.id,
+            'id Configuracion': self.id_config,
+            'nombre': self.nombre,
+            'Fecha de inicio': self.fecha_inicio,
+            'estado': self.estado,
+            'Fecha de fin': self.fecha_fin           
+        }

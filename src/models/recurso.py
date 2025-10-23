@@ -7,5 +7,14 @@ class recurso:
         self.tipo = tipo
         self.valor_hora = valor_hora
 
+    def to_dict(self):
 
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'abreviatura': self.abreviatura,
+            'metrica': self.metrica,
+            'tipo': self.tipo,
+            'Valor por hora': self.valor_hora
+        }
     
