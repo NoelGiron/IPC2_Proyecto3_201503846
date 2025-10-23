@@ -39,6 +39,11 @@ class xmlReader:
             metrica = self.obtener_texto(recurso_element.find('metrica'))
             tipo = self.obtener_texto(recurso_element.find('tipo'))
             valor_hora = self.obtener_texto(recurso_element.find('valorXhora'))
+            nombre = self.obtener_texto(recurso_element.find('nombre'))
+            abreviatura = self.obtener_texto(recurso_element.find('abreviatura'))
+            metrica = self.obtener_texto(recurso_element.find('metrica'))
+            tipo = self.obtener_texto(recurso_element.find('tipo'))
+            valor_hora = self.obtener_texto(recurso_element.find('valorXhora'))
 
             try:
                 valor_hora = float(valor_hora) if valor_hora else 0.0
@@ -59,6 +64,9 @@ class xmlReader:
             nombre = self.obtener_texto(categoria_element.find('nombre'))
             descripcion = self.obtener_texto(categoria_element.find('descripcion'))
             carga_trabajo = self.obtener_texto(categoria_element.find('cargaTrabajo'))
+            nombre = self.obtener_texto(categoria_element.find('nombre'))
+            descripcion = self.obtener_texto(categoria_element.find('descripcion'))
+            carga_trabajo = self.obtener_texto(categoria_element.find('cargaTrabajo'))
 
             nueva_categoria = categoria(categoria_id, nombre, descripcion, carga_trabajo)
 
@@ -73,9 +81,12 @@ class xmlReader:
             config_id = config_element.get('id')
             nombre = self.obtener_texto(config_element.find('nombre'))
             descripcion = self.obtener_texto(config_element.find('descripcion'))
+            nombre = self.obtener_texto(config_element.find('nombre'))
+            descripcion = self.obtener_texto(config_element.find('descripcion'))
 
             nueva_config = configuracion(config_id, nombre, descripcion)
 
+            self.leer_recursos_configuracion(config_element.find('recursosConfiguracion'), nueva_config)
             self.leer_recursos_configuracion(config_element.find('recursosConfiguracion'), nueva_config)
             
             categoria_obj.configuraciones.append(nueva_config)
@@ -89,6 +100,7 @@ class xmlReader:
             
         for recurso_config_element in recursos_config_element.findall('recurso'):
             recurso_id = recurso_config_element.get('id')
+            cantidad_texto = self.obtener_texto(recurso_config_element)
             cantidad_texto = self.obtener_texto(recurso_config_element)
             
             try:
@@ -113,6 +125,11 @@ class xmlReader:
             clave = self.obtener_texto(cliente_element.find('clave'))
             direccion = self.obtener_texto(cliente_element.find('direccion'))
             correo = self.obtener_texto(cliente_element.find('correoElectronico'))
+            nombre = self.obtener_texto(cliente_element.find('nombre'))
+            usuario = self.obtener_texto(cliente_element.find('usuario'))
+            clave = self.obtener_texto(cliente_element.find('clave'))
+            direccion = self.obtener_texto(cliente_element.find('direccion'))
+            correo = self.obtener_texto(cliente_element.find('correoElectronico'))
 
             nuevo_cliente = cliente(nit, nombre, usuario, clave, direccion, correo)
             
@@ -128,6 +145,11 @@ class xmlReader:
         
         for instancia_element in lista_instancias_element.findall('instancia'):
             instancia_id = instancia_element.get('id')
+            id_configuracion = self.obtener_texto(instancia_element.find('idConfiguracion'))
+            nombre_instancia = self.obtener_texto(instancia_element.find('nombre'))
+            fecha_inicio = self.obtener_texto(instancia_element.find('fechaInicio'))
+            estado = self.obtener_texto(instancia_element.find('estado'))
+            fecha_final = self.obtener_texto(instancia_element.find('fechaFinal'))
             id_configuracion = self.obtener_texto(instancia_element.find('idConfiguracion'))
             nombre_instancia = self.obtener_texto(instancia_element.find('nombre'))
             fecha_inicio = self.obtener_texto(instancia_element.find('fechaInicio'))
