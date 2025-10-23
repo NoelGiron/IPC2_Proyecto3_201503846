@@ -1,4 +1,5 @@
-from flask import Blueprint
+from flask import Blueprint, request
+from src.models.xmlReader import xmlReader
 
 funciones_bp = Blueprint('servicios',__name__)
 
@@ -29,4 +30,34 @@ def crear_instancia():
 @funciones_bp.route('/servicios/generarFactura', methods=['POST'])
 def crear_factura():
     return {'mensaje': 'las facturas estan en desarrollo'}
+
+@funciones_bp.route('/servicios/cargarDatos', methods=['POST'])
+def cargar_xml():
+    try:
+        if 'archivo' not in request.files:
+            return {'error': 'No se envio ningun archivo'}, 400
+        
+        archivo = request.files['archivo']
+
+        if archivo.filename == '':
+            return {'error': 'No se selecciono ningun archivo'}, 400
+        
+        if not archivo.filename.lower().endswith('.xml'):
+            return {'error': 'el archivo debe de ser XML'}, 400
+        
+        lector_xml = xmlReader()
+
+        if lector_xml.leer_xml(archivo):
+            return {
+                'mensaje': 'Se cargo el XML',
+                'recursos': len(lector_xml.recursos),
+                'categorias': len(lector_xml.categorias),
+                'clientes': len(lector_xml.clientes)
+            }, 200
+        
+        else:
+            return{'error': 'Error al procesar el archivo XML'}, 500
+        
+    except Exception as e:
+        return {'error': f'Error interno del servidor: {str(e)}'}, 500
 
