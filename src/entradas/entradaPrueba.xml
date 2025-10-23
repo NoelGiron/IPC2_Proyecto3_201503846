@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<archivoConfiguraciones>
+    <listaRecursos>
+        <recurso id="CPU001">
+        <nombre>Procesador Intel Xeon</nombre>
+        <abreviatura>CPU</abreviatura>
+        <metrica>Núcleos</metrica>
+        <tipo>Hardware</tipo>
+        <valorXhora>0.50</valorXhora>
+        </recurso>
+        <recurso id="RAM001">
+        <nombre>Memoria RAM</nombre>
+        <abreviatura>RAM</abreviatura>
+        <metrica>GB</metrica>
+        <tipo>Hardware</tipo>
+        <valorXhora>0.10</valorXhora>
+        </recurso>
+        <recurso id="DISK001">
+        <nombre>Almacenamiento SSD</nombre>
+        <abreviatura>SSD</abreviatura>
+        <metrica>GB</metrica>
+        <tipo>Hardware</tipo>
+        <valorXhora>0.05</valorXhora>
+        </recurso>
+        <recurso id="WIN001">
+        <nombre>Windows Server 2022</nombre>
+        <abreviatura>WIN</abreviatura>
+        <metrica>Licencia</metrica>
+        <tipo>Software</tipo>
+        <valorXhora>0.25</valorXhora>
+        </recurso>
+        <recurso id="LIN001">
+        <nombre>Ubuntu Server</nombre>
+        <abreviatura>LIN</abreviatura>
+        <metrica>Licencia</metrica>
+        <tipo>Software</tipo>
+        <valorXhora>0.00</valorXhora>
+        </recurso>
+    </listaRecursos>
+    <listaCategorias>
+        <categoria id="CAT001">
+        <nombre>Servidores Web</nombre>
+        <descripcion>Configuraciones para hosting web</descripcion>
+        <cargaTrabajo>Alto tráfico web</cargaTrabajo>
+        <listaConfiguraciones>
+            <configuracion id="CONF001">
+            <nombre>Básico Web</nombre>
+            <descripcion>Servidor web básico para sitios pequeños</descripcion>
+            <recursosConfiguracion>
+                <recurso id="CPU001">2</recurso>
+                <recurso id="RAM001">4</recurso>
+                <recurso id="DISK001">50</recurso>
+                <recurso id="LIN001">1</recurso>
+            </recursosConfiguracion>
+            </configuracion>
+            <configuracion id="CONF002">
+            <nombre>Avanzado Web</nombre>
+            <descripcion>Servidor web para sitios de alto tráfico</descripcion>
+            <recursosConfiguracion>
+                <recurso id="CPU001">4</recurso>
+                <recurso id="RAM001">8</recurso>
+                <recurso id="DISK001">100</recurso>
+                <recurso id="LIN001">1</recurso>
+            </recursosConfiguracion>
+            </configuracion>
+        </listaConfiguraciones>
+        </categoria>
+        <categoria id="CAT002">
+            <nombre>Servidores Base de Datos</nombre>
+            <descripcion>Configuraciones para bases de datos</descripcion>
+            <cargaTrabajo>Procesamiento de datos</cargaTrabajo>
+            <listaConfiguraciones>
+                <configuracion id="CONF003">
+                <nombre>DB Estándar</nombre>
+                <descripcion>Servidor de base de datos estándar</descripcion>
+                <recursosConfiguracion>
+                    <recurso id="CPU001">4</recurso>
+                    <recurso id="RAM001">16</recurso>
+                    <recurso id="DISK001">200</recurso>
+                    <recurso id="WIN001">1</recurso>
+                </recursosConfiguracion>
+                </configuracion>
+            </listaConfiguraciones>
+        </categoria>
+    </listaCategorias>
+    <listaClientes>
+        <cliente nit="12345678-9">
+        <nombre>Empresa ABC S.A.</nombre>
+        <usuario>admin_abc</usuario>
+        <clave>abc123secure</clave>
+        <direccion>Av. Principal 123, Ciudad</direccion>
+        <correoElectronico>contacto@empresaabc.com</correoElectronico>
+        <listaInstancias>
+            <instancia id="INST001">
+            <idConfiguracion>CONF001</idConfiguracion>
+            <nombre>Sitio Web Corporativo</nombre>
+            <fechaInicio>2024-01-15 08:00:00</fechaInicio>
+            <estado>Activo</estado>
+            <fechaFinal>2024-12-31 23:59:59</fechaFinal>
+            </instancia>
+            <instancia id="INST002">
+            <idConfiguracion>CONF002</idConfiguracion>
+            <nombre>Tienda Online</nombre>
+            <fechaInicio>2024-02-01 10:30:00</fechaInicio>
+            <estado>Activo</estado>
+            <fechaFinal>2024-12-31 23:59:59</fechaFinal>
+            </instancia>
+            </listaInstancias>
+        </cliente>
+        <cliente nit="98765432-1">
+        <nombre>Comercio XYZ Ltda.</nombre>
+        <usuario>user_xyz</usuario>
+        <clave>xyz456safe</clave>
+        <direccion>Calle Secundaria 456, Pueblo</direccion>
+        <correoElectronico>info@comercioxyz.com</correoElectronico>
+        <listaInstancias>
+            <instancia id="INST003">
+            <idConfiguracion>CONF003</idConfiguracion>
+            <nombre>Base de Datos Principal</nombre>
+            <fechaInicio>2024-03-10 14:20:00</fechaInicio>
+            <estado>Activo</estado>
+            <fechaFinal>2024-12-31 23:59:59</fechaFinal>
+            </instancia>
+            <instancia id="INST004">
+            <idConfiguracion>CONF001</idConfiguracion>
+            <nombre>Portal de Clientes</nombre>
+            <fechaInicio>2024-01-20 09:15:00</fechaInicio>
+            <estado>Inactivo</estado>
+            <fechaFinal>2024-06-30 23:59:59</fechaFinal>
+            </instancia>
+        </listaInstancias>
+        </cliente>
+    </listaClientes>
+</archivoConfiguraciones>
