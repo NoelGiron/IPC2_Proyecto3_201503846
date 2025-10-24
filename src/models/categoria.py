@@ -13,5 +13,5 @@ class categoria:
             'nombre': self.nombre,
             'descripcion': self.descripcion,
             'carga': self.carga,
-            'configuracion': self.configuraciones
+            'configuracion': [config.to_dict() for config in self.configuraciones]
         }

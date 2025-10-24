@@ -17,5 +17,5 @@ class cliente:
             'clave': self.clave,
             'direccion': self.direccion,
             'correo': self.correo,
-            'instancias': self.lista_instancias            
+            'instancias': [instancia.to_dict() for instancia in self.lista_instancias]           
         }

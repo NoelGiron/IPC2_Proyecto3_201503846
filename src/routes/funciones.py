@@ -1,11 +1,28 @@
-from flask import Blueprint, request
+from flask import Blueprint, jsonify, request
 from src.models.xmlReader import xmlReader
 
 funciones_bp = Blueprint('servicios',__name__)
 
+datos_globales = None
+
 @funciones_bp.route('/servicios/consultarDatos', methods=['GET'])
 def consultar_datos():
-    return {'mensaje': 'los datos estan en desarrollo'}
+    global datos_globales
+
+    if datos_globales is None:
+        return {'error': 'No hay datos cargados'}, 404
+    
+    try:
+        datos = datos_globales.obtener_datos()
+
+        return jsonify({
+            'mensaje': 'Datos completos',
+            'datos': datos
+        }),200
+    
+    except Exception as e:
+
+        return {'error': f'Error al consultar los datos: {str(e)}'},500
 
 @funciones_bp.route('/servicios/crearRecurso', methods=['POST'])
 def crear_recurso():
@@ -33,6 +50,9 @@ def crear_factura():
 
 @funciones_bp.route('/servicios/cargarDatos', methods=['POST'])
 def cargar_xml():
+
+    global datos_globales
+
     try:
         if 'archivo' not in request.files:
             return {'error': 'No se envio ningun archivo'}, 400
@@ -48,6 +68,7 @@ def cargar_xml():
         lector_xml = xmlReader()
 
         if lector_xml.leer_xml(archivo):
+            datos_globales = lector_xml
             return {
                 'mensaje': 'Se cargo el XML',
                 'recursos': len(lector_xml.recursos),

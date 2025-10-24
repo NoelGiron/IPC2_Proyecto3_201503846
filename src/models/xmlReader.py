@@ -10,6 +10,7 @@ class xmlReader:
         self.recursos = []
         self.categorias = []
         self.clientes = []
+        self.datos_cargados = False
 
     def leer_xml(self, archivo):
         try:
@@ -22,7 +23,10 @@ class xmlReader:
 
             self.leer_clientes(root.find('listaClientes'))
 
+            self.datos_cargados = True
+
             return True
+        
         except Exception as e:
             print(f"Error al leer el archivo: {e}")
             return False
@@ -133,7 +137,6 @@ class xmlReader:
 
             nuevo_cliente = cliente(nit, nombre, usuario, clave, direccion, correo)
             
-            # Leer las instancias de este cliente
             lista_instancias_element = cliente_element.find('listaInstancias')
             self.leer_instancias(lista_instancias_element, nuevo_cliente)
             
@@ -164,3 +167,14 @@ class xmlReader:
         if element is not None and element.text is not None:
             return element.text.strip()
         return ""
+    
+    def obtener_datos(self):
+        if not self.datos_cargados:
+            return None
+        
+        return {
+            'recursos': [recurso.to_dict() for recurso in self.recursos],
+            'categoria': [categoria.to_dict() for categoria in self.categorias],
+            'clientes': [cliente.to_dict() for cliente in self.clientes]
+        }
+    
