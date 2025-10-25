@@ -10,6 +10,7 @@ class xmlReader:
         self.recursos = []
         self.categorias = []
         self.clientes = []
+        self.nombre_archivo = None
         self.datos_cargados = False
 
     def leer_xml(self, archivo):
@@ -163,6 +164,9 @@ class xmlReader:
 
             cliente_obj.lista_instancias.append(nueva_instancia)
 
+    def agregar_recurso(self, nuevo_recurso):
+        self.recursos.append(nuevo_recurso)
+        
     def obtener_texto(self, element):
         if element is not None and element.text is not None:
             return element.text.strip()
@@ -177,4 +181,5 @@ class xmlReader:
             'categoria': [categoria.to_dict() for categoria in self.categorias],
             'clientes': [cliente.to_dict() for cliente in self.clientes]
         }
+    
     

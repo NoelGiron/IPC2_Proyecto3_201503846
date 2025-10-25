@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from src.models.xmlReader import xmlReader
+from src.models.recurso import recurso
 
 funciones_bp = Blueprint('servicios',__name__)
 
@@ -13,11 +14,12 @@ def consultar_datos():
         return {'error': 'No hay datos cargados'}, 404
     
     try:
-        datos = datos_globales.obtener_datos()
 
         return jsonify({
             'mensaje': 'Datos completos',
-            'datos': datos
+            'recursos': [r.to_dict() for r in datos_globales.recursos],
+            'categorias': [c.to_dict() for c in datos_globales.categorias],
+            'clientes': [cl.to_dict() for cl in datos_globales.clientes]
         }),200
     
     except Exception as e:
@@ -26,7 +28,27 @@ def consultar_datos():
 
 @funciones_bp.route('/servicios/crearRecurso', methods=['POST'])
 def crear_recurso():
-    return {'mensaje': 'crear esta en desarrollo'}
+    global datos_globales
+
+    if datos_globales is None:
+        return {'error': 'No hay datos cargados'}, 400
+    
+    data = request.get_json()
+
+    nuevo_recurso = recurso(
+        id=data['id'],
+        nombre=data['nombre'],
+        abreviatura=data['abreviatura'], 
+        metrica=data['metrica'],
+        tipo=data['tipo'],
+        valor_hora=data['valorXhora']
+    )
+
+    if datos_globales.agregar_recurso(nuevo_recurso):
+        return {'mensaje': 'Recurso creado', 'recurso': nuevo_recurso.to_dict()}, 201
+    else:
+        return {'error': 'Error al crear recurso'}, 500
+
 
 @funciones_bp.route('/servicios/crearCategoria', methods=['POST'])
 def crear_categoria():
@@ -65,16 +87,16 @@ def cargar_xml():
         if not archivo.filename.lower().endswith('.xml'):
             return {'error': 'el archivo debe de ser XML'}, 400
         
-        lector_xml = xmlReader()
+        datos_globales = xmlReader()
 
-        if lector_xml.leer_xml(archivo):
-            datos_globales = lector_xml
-            return {
-                'mensaje': 'Se cargo el XML',
-                'recursos': len(lector_xml.recursos),
-                'categorias': len(lector_xml.categorias),
-                'clientes': len(lector_xml.clientes)
-            }, 200
+        if datos_globales.leer_xml(archivo):
+            datos_globales.nombre_archivo = archivo.filename
+            return{
+                'mensaje': 'Se cargó el XML exitosamente',
+                'recursos': len(datos_globales.recursos),
+                'categorias': len(datos_globales.categorias),
+                'clientes': len(datos_globales.clientes)
+            }    
         
         else:
             return{'error': 'Error al procesar el archivo XML'}, 500
