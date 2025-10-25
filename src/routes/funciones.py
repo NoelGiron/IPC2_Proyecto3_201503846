@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from src.models.xmlReader import xmlReader
 from src.models.recurso import recurso
+from src.models.categoria import categoria
 
 funciones_bp = Blueprint('servicios',__name__)
 
@@ -52,7 +53,28 @@ def crear_recurso():
 
 @funciones_bp.route('/servicios/crearCategoria', methods=['POST'])
 def crear_categoria():
-    return {'mensaje': 'las categorias estan en desarrollo'}
+    global datos_globales
+
+    if datos_globales is None:
+        return {'error': 'No hay datos cargados'}, 400
+    
+    data = request.get_json()
+
+    nueva_categoria = categoria(
+        id=data['id'],
+        nombre=data['nombre'],
+        descripcion=data['descripcion'],
+        carga=data['cargaTrabajo']
+    )
+
+    if datos_globales.agregar_categoria(nueva_categoria):
+        return {
+            'mensaje': 'Categoria creada exitosamente',
+            'categoria': nueva_categoria.to_dict()
+        }, 201
+    
+    else:
+        return {'error': 'Error al crear categoria'}, 500
 
 @funciones_bp.route('/servicios/crearConfiguracion', methods=['POST'])
 def crear_configuracion():

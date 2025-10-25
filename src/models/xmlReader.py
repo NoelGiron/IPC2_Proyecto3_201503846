@@ -166,6 +166,10 @@ class xmlReader:
 
     def agregar_recurso(self, nuevo_recurso):
         self.recursos.append(nuevo_recurso)
+        return True
+
+    def agregar_categoria(self, nueva_categoria):
+        self.categorias.append(nueva_categoria)
         return True        
 
     def obtener_texto(self, element):
