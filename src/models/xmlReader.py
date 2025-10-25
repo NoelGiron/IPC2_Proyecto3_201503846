@@ -166,7 +166,8 @@ class xmlReader:
 
     def agregar_recurso(self, nuevo_recurso):
         self.recursos.append(nuevo_recurso)
-        
+        return True        
+
     def obtener_texto(self, element):
         if element is not None and element.text is not None:
             return element.text.strip()
