@@ -170,7 +170,11 @@ class xmlReader:
 
     def agregar_categoria(self, nueva_categoria):
         self.categorias.append(nueva_categoria)
-        return True        
+        return True 
+
+    def agregar_cliente(self, nuevo_cliente):
+        self.clientes.append(nuevo_cliente)
+        return True       
 
     def obtener_texto(self, element):
         if element is not None and element.text is not None:

@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from src.models.xmlReader import xmlReader
 from src.models.recurso import recurso
 from src.models.categoria import categoria
+from src.models.cliente import cliente
 
 funciones_bp = Blueprint('servicios',__name__)
 
@@ -82,7 +83,30 @@ def crear_configuracion():
 
 @funciones_bp.route('/servicios/crearCliente', methods=['POST'])
 def crear_cliente():
-    return {'mensaje': 'los clientes estan en desarrollo'}
+    global datos_globales
+
+    if datos_globales is None:
+        return {'error': 'No hay datos cargados'}, 400
+    
+    data = request.get_json()
+
+    nuevo_cliente = cliente(
+        nit=data['nit'],
+        nombre=data['nombre'],
+        usuario=data['usuario'],
+        clave=data['clave'],
+        direccion=data['direccion'],
+        correo=data['correoElectronico']
+    )
+
+    if datos_globales.agregar_cliente(nuevo_cliente):
+        return {
+            'mensaje': 'Cliente creado exitosamente', 
+            'cliente': nuevo_cliente.to_dict()
+        }, 201
+    
+    else:
+        return {'error': 'Error al crear cliente'}, 500
 
 @funciones_bp.route('/servicios/crearInstancia', methods=['POST'])
 def crear_instancia():
